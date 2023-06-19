@@ -1,33 +1,49 @@
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-
+import java.util.Scanner;
 
 public class hwtask {
     public static void main(String[] args) {
-        Map<String, String> map = new LinkedHashMap<>();
-        map.put("name","Ivanov");
-        map.put("country","Russia");
-        map.put("city","Moskow");
-        map.put("age",null);
+        String s1 = "select* from students where";
+        String[] strings = s1
+            .replaceAll("\\p{P}", "")
+            .replaceAll("\\s", " ")
+            .replace("*", "")
+            .replace("select", "\"name\"")
+            .replace("from", "\"country\"")
+            .replace("students", "\"city\"")
+            .replace("where", "\"age\"")
+            .split(" ");
 
-        System.out.println(getQuery(map));
-    }
-
-    public static String getQuery(Map<String, String> params) {
-        StringBuilder result = new StringBuilder();
-        if (params == null || params.isEmpty())
-            return result.toString();
-
-        for (Map.Entry<String, String> pair : params.entrySet()) {
-            if (pair.getKey() == null || pair.getValue() == null)
-                continue;
-
-            result.append(pair.getKey()).append(":").append(pair.getValue()).append(", ");
-        }
-
-        result.delete(result.length() - 2, result.length());
+        Scanner scanner = new Scanner(System.in);
+        String name = scanner.nextLine();
+        String country = scanner.nextLine();
+        String city = scanner.nextLine();
+        String age = scanner.nextLine();
         
-        return result.toString();
+        
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < strings.length; i++) {
+            if(name.equals("null") == false){
+                if (i != 0){
+                    builder.append(", ")
+                    .append(strings[i])
+                    .append(":");
+                    if ( i == 0 ) builder.append("\"" + name + "\"");
+                    if ( i == 1 ) builder.append("\"" + country + "\"");
+                    if ( i == 2 ) builder.append("\"" + city + "\"");
+                    if ( i == 3 ) builder.append("\"" + age + "\"");
+                }
+                else{
+                    builder.append(strings[i])
+                    .append(":");
+                    if ( i == 0 ) builder.append("\"" + name + "\"");
+                    if ( i == 1 ) builder.append("\"" + country + "\"");
+                    if ( i == 2 ) builder.append("\"" + city + "\"");
+                    if ( i == 3 ) builder.append("\"" + age + "\"");
+                }
+            }
+        }
+        builder.toString();
+        System.out.println(builder);
     }
 }
